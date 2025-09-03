@@ -109,43 +109,67 @@ class _TimetableViewState extends State<TimetableView>
   }
 
   Widget _buildTimelineList(BuildContext context) {
-    return Container(
-      alignment: Alignment.topLeft,
-      width: widget.timetableStyle.timeItemWidth,
-      padding: EdgeInsets.only(top: widget.timetableStyle.laneHeight),
-      color: widget.timetableStyle.timelineColor,
-      child: ListView(
-        physics: const ClampingScrollPhysics(),
-        controller: verticalScrollController,
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: [
-          for (var i = widget.timetableStyle.startHour;
-              i < widget.timetableStyle.endHour;
-              i += 1)
-            i
-        ].map((hour) {
-          return Container(
-            height: widget.timetableStyle.timeItemHeight,
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: widget.timetableStyle.timelineBorderColor,
-                  width: 0,
-                ),
+  return Container(
+    alignment: Alignment.topLeft,
+    width: widget.timetableStyle.timeItemWidth,
+    padding: EdgeInsets.only(top: widget.timetableStyle.laneHeight),
+    color: widget.timetableStyle.timelineColor,
+    child: ListView(
+      physics: const ClampingScrollPhysics(),
+      controller: verticalScrollController,
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      children: [
+        for (var hour = widget.timetableStyle.startHour;
+            hour < widget.timetableStyle.endHour;
+            hour++)
+          for (var minute = 0; minute < 60; minute += 30)
+            {
+              "startHour": hour,
+              "startMinute": minute,
+              "endHour": (minute == 30) ? hour + 1 : hour,
+              "endMinute": (minute == 30) ? 0 : 30,
+            }
+      ].map((slot) {
+        final startHour = slot["startHour"] as int;
+        final startMinute = slot["startMinute"] as int;
+        final endHour = slot["endHour"] as int;
+        final endMinute = slot["endMinute"] as int;
+
+        return Container(
+          height: widget.timetableStyle.timeItemHeight,
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: widget.timetableStyle.timelineBorderColor,
+                width: 0,
               ),
-              color: widget.timetableStyle.timelineItemColor,
+              right: BorderSide(
+                color: widget.timetableStyle.timelineBorderColor,
+                width: 1,
+              ),
             ),
+            color: widget.timetableStyle.timelineItemColor,
+          ),
+          child: Container(
+            alignment: widget.timetableStyle.timeItemAlignment,
             child: Text(
-              Utils.hourFormatter(hour, 0),
-              style: TextStyle(color: widget.timetableStyle.timeItemTextColor),
+              "${Utils.hourFormatter(startHour, startMinute, widget.timetableStyle.showTimeAsAMPM)}"
+              " - "
+              "${Utils.hourFormatter(endHour, endMinute, widget.timetableStyle.showTimeAsAMPM)}",
+              style: TextStyle(
+                color: widget.timetableStyle.timeItemTextColor,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
               textAlign: TextAlign.center,
             ),
-          );
-        }).toList(),
-      ),
-    );
-  }
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
 
   Widget _buildLaneList(BuildContext context) {
     return Container(
