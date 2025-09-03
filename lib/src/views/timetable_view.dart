@@ -11,6 +11,8 @@ class TimetableView extends StatefulWidget {
   final List<LaneEvents> laneEventsList;
   final TimetableStyle timetableStyle;
 
+  final Widget Function(TableEvent event)? customWidget;
+
   /// Called when an empty slot or cell is tapped must not be null
   // final void Function(int laneIndex, TableEventTime start, TableEventTime end)
   //     onEmptySlotTap;
@@ -24,6 +26,7 @@ class TimetableView extends StatefulWidget {
     this.timetableStyle = const TimetableStyle(),
     // required this.onEmptySlotTap,
     required this.onEventTap,
+    this.customWidget
   })  : super(key: key);
 
   @override
@@ -100,7 +103,8 @@ class _TimetableViewState extends State<TimetableView>
                         //   tappedEmptyCellStartTime = startTime;
                         //   tappedEmptyCellEndTime = endTime;
                         // });
-                      });
+                      },
+                      customWidget: widget.customWidget,);
             }).toList(),
           ),
         ),

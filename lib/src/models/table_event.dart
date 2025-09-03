@@ -32,6 +32,8 @@ class TableEvent {
 
   final TextStyle textStyle;
 
+  final dynamic data;
+
   TableEvent({
     required this.title,
     required this.eventId,
@@ -45,5 +47,6 @@ class TableEvent {
     this.decoration,
     this.backgroundColor = const Color(0xCC2196F3),
     this.textStyle = const TextStyle(color: Colors.white),
+    required this.data
   }) : assert(endTime.isAfter(startTime));
 }

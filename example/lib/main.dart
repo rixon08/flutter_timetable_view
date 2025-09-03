@@ -48,14 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
             title: 'An event 1',
             startTime: TableEventTime(hour: 8, minute: 0),
             endTime: TableEventTime(hour: 10, minute: 0),
-            laneIndex: 1
+            laneIndex: 1,
+            data: 'An event 1',
           ),
           TableEvent(
             eventId: 2,
             title: 'An event 2',
             startTime: TableEventTime(hour: 12, minute: 0),
             endTime: TableEventTime(hour: 13, minute: 20),
-            laneIndex: 2
+            laneIndex: 2,
+            data: 'An event 2',
           ),
         ],
       ),
@@ -67,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
             title: 'An event 3',
             startTime: TableEventTime(hour: 10, minute: 0),
             endTime: TableEventTime(hour: 13, minute: 00),
-            laneIndex: 3
+            laneIndex: 3,
+            data: 'An event 3',
           ),
         ],
       ),

@@ -18,6 +18,8 @@ class LaneView extends StatelessWidget {
   /// Called when an event is tapped
   final void Function(TableEvent event) onEventTap;
 
+  final Widget Function(TableEvent event)? customWidget;
+
   const LaneView({
     Key? key,
     required this.events,
@@ -25,6 +27,7 @@ class LaneView extends StatelessWidget {
     required this.index,
     required this.onEmptyCellTap,
     required this.onEventTap,
+    this.customWidget
   })  : super(key: key);
 
   @override
@@ -59,6 +62,7 @@ class LaneView extends StatelessWidget {
               event: event,
               timetableStyle: timetableStyle,
               laneIndex: index,
+              customWidget: customWidget,
             );
           }).toList(),
         ],

@@ -15,12 +15,15 @@ class EventView extends StatelessWidget {
   /// Called when an event is tapped
   final void Function(TableEvent event) onEventTap;
 
+  final Widget Function(TableEvent event)? customWidget;
+
   const EventView({
     Key? key,
     required this.event,
     required this.timetableStyle,
     required this.laneIndex,
     required this.onEventTap,
+    this.customWidget,
   }) : super(key: key);
 
   @override
@@ -37,20 +40,22 @@ class EventView extends StatelessWidget {
               event.decoration ?? BoxDecoration(color: event.backgroundColor),
           margin: event.margin,
           padding: event.padding,
-          child: Utils.eventText(
-            event,
-            context,
-            math.max(
-              0.0,
-              height() - (event.padding.top) - (event.padding.bottom),
-            ),
-            math.max(
-              0.0,
-              timetableStyle.laneWidth -
-                  (event.padding.left) -
-                  (event.padding.right),
-            ),
-          ),
+          child: customWidget != null
+              ? customWidget!(event)
+              : Utils.eventText(
+                  event,
+                  context,
+                  math.max(
+                    0.0,
+                    height() - (event.padding.top) - (event.padding.bottom),
+                  ),
+                  math.max(
+                    0.0,
+                    timetableStyle.laneWidth -
+                        (event.padding.left) -
+                        (event.padding.right),
+                  ),
+                ),
         ),
       ),
     );
@@ -115,18 +120,15 @@ class EventViewTemp extends StatelessWidget {
           onEventTap(event);
         },
         child: Container(
-          decoration: event.decoration ??
-                  BoxDecoration(color: event.backgroundColor),
+          decoration:
+              event.decoration ?? BoxDecoration(color: event.backgroundColor),
           margin: event.margin,
           padding: event.padding,
           child: (Utils.eventText)(
             event,
             context,
             math.max(
-                0.0,
-                height() -
-                    (event.padding.top) -
-                    (event.padding.bottom)),
+                0.0, height() - (event.padding.top) - (event.padding.bottom)),
             math.max(
                 0.0,
                 timetableStyle.laneWidth -
