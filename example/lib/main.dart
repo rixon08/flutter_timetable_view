@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<LaneEvents> _buildLaneEvents() {
     return [
       LaneEvents(
-        lane: Lane(name: 'Track A'),
+        lane: Lane(name: 'Track A', laneIndex: 1),
         events: [
           TableEvent(
             eventId: 1,
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       LaneEvents(
-        lane: Lane(name: 'Track B'),
+        lane: Lane(name: 'Track B', laneIndex: 2),
         events: [
           TableEvent(
             eventId: 3,
