@@ -29,10 +29,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Flutter Timetable View Demo'),
       ),
       body: TimetableView(
-        laneEventsList: _buildLaneEvents(),
-        timetableStyle: TimetableStyle(),
-      ),
-    );
+                laneEventsList: _buildLaneEvents(),
+                onEventTap: (event){
+
+                },
+                timetableStyle: TimetableStyle(startHour: 4, endHour: 24),
+              ),
+            );
   }
 
   List<LaneEvents> _buildLaneEvents() {
@@ -41,14 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
         lane: Lane(name: 'Track A'),
         events: [
           TableEvent(
+            eventId: 1,
             title: 'An event 1',
-            start: TableEventTime(hour: 8, minute: 0),
-            end: TableEventTime(hour: 10, minute: 0),
+            startTime: TableEventTime(hour: 8, minute: 0),
+            endTime: TableEventTime(hour: 10, minute: 0),
+            laneIndex: 1
           ),
           TableEvent(
+            eventId: 2,
             title: 'An event 2',
-            start: TableEventTime(hour: 12, minute: 0),
-            end: TableEventTime(hour: 13, minute: 20),
+            startTime: TableEventTime(hour: 12, minute: 0),
+            endTime: TableEventTime(hour: 13, minute: 20),
+            laneIndex: 2
           ),
         ],
       ),
@@ -56,9 +63,11 @@ class _MyHomePageState extends State<MyHomePage> {
         lane: Lane(name: 'Track B'),
         events: [
           TableEvent(
+            eventId: 3,
             title: 'An event 3',
-            start: TableEventTime(hour: 10, minute: 10),
-            end: TableEventTime(hour: 11, minute: 45),
+            startTime: TableEventTime(hour: 10, minute: 0),
+            endTime: TableEventTime(hour: 13, minute: 00),
+            laneIndex: 3
           ),
         ],
       ),

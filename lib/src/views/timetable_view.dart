@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_timetable_view/flutter_timetable_view.dart';
 import 'package:flutter_timetable_view/src/models/lane_events.dart';
 import 'package:flutter_timetable_view/src/styles/timetable_style.dart';
 import 'package:flutter_timetable_view/src/utils/utils.dart';
@@ -10,11 +11,20 @@ class TimetableView extends StatefulWidget {
   final List<LaneEvents> laneEventsList;
   final TimetableStyle timetableStyle;
 
+  /// Called when an empty slot or cell is tapped must not be null
+  // final void Function(int laneIndex, TableEventTime start, TableEventTime end)
+  //     onEmptySlotTap;
+
+  /// Called when an event is tapped
+  final void Function(TableEvent event) onEventTap;
+
   TimetableView({
     Key? key,
     required this.laneEventsList,
-    this.timetableStyle: const TimetableStyle(),
-  }) : super(key: key);
+    this.timetableStyle = const TimetableStyle(),
+    // required this.onEmptySlotTap,
+    required this.onEventTap,
+  })  : super(key: key);
 
   @override
   _TimetableViewState createState() => _TimetableViewState();
@@ -79,9 +89,18 @@ class _TimetableViewState extends State<TimetableView>
           child: Row(
             children: widget.laneEventsList.map((laneEvents) {
               return LaneView(
-                events: laneEvents.events,
-                timetableStyle: widget.timetableStyle,
-              );
+                      events: laneEvents.events,
+                      timetableStyle: widget.timetableStyle,
+                      index: widget.laneEventsList.indexOf(laneEvents),
+                      onEventTap: widget.onEventTap,
+                      onEmptyCellTap: (laneIndex, startTime, endTime) {
+                        // setState(() {
+                        //   isEmptyCellTapped = true;
+                        //   tappedEmptyCellLaneIndex = laneIndex;
+                        //   tappedEmptyCellStartTime = startTime;
+                        //   tappedEmptyCellEndTime = endTime;
+                        // });
+                      });
             }).toList(),
           ),
         ),

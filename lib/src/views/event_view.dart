@@ -9,12 +9,19 @@ class EventView extends StatelessWidget {
   final TableEvent event;
   final TimetableStyle timetableStyle;
 
+  //  Uniquely identifies which lane the event belongs to or falls other
+  final int laneIndex;
+
+  /// Called when an event is tapped
+  final void Function(TableEvent event) onEventTap;
+
   const EventView({
     Key? key,
     required this.event,
     required this.timetableStyle,
-  })  : 
-        super(key: key);
+    required this.laneIndex,
+    required this.onEventTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +31,92 @@ class EventView extends StatelessWidget {
       left: 0,
       width: timetableStyle.laneWidth,
       child: GestureDetector(
-        onTap: event.onTap,
+        onTap: () => onEventTap(event),
+        child: Container(
+          decoration:
+              event.decoration ?? BoxDecoration(color: event.backgroundColor),
+          margin: event.margin,
+          padding: event.padding,
+          child: Utils.eventText(
+            event,
+            context,
+            math.max(
+              0.0,
+              height() - (event.padding.top) - (event.padding.bottom),
+            ),
+            math.max(
+              0.0,
+              timetableStyle.laneWidth -
+                  (event.padding.left) -
+                  (event.padding.right),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Hitung posisi atas berdasarkan startTime event
+  double top() {
+    final minutesFromStart =
+        event.startTime.difference(_dayStart()).inMinutes; // selisih menit
+    final slotIndex = minutesFromStart / 30; // jumlah slot 30 menit
+    return slotIndex * timetableStyle.timeItemHeight;
+  }
+
+  /// Hitung tinggi event berdasarkan durasi
+  double height() {
+    final durationMinutes = event.endTime.difference(event.startTime).inMinutes;
+    final slots = durationMinutes / 30; // jumlah slot 30 menit
+    return slots * timetableStyle.timeItemHeight + 1;
+  }
+
+  /// Ambil waktu awal hari (misalnya jam startHour)
+  DateTime _dayStart() {
+    return DateTime(
+      event.startTime.year,
+      event.startTime.month,
+      event.startTime.day,
+      timetableStyle.startHour,
+      0,
+    );
+  }
+}
+
+class EventViewTemp extends StatelessWidget {
+  final TableEvent event;
+  final TimetableStyle timetableStyle;
+
+  //  Uniquely identifies which lane the event belongs to or falls other
+  final int laneIndex;
+
+  /// Called when an event is tapped
+  final void Function(TableEvent event) onEventTap;
+
+  //TODO: Delete lane Index implementation
+
+  const EventViewTemp(
+      {Key? key,
+      required this.event,
+      required this.timetableStyle,
+      required this.laneIndex,
+      required this.onEventTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: top(),
+      height: height(),
+      left: 0,
+      width: timetableStyle.laneWidth,
+      child: GestureDetector(
+        onTap: () {
+          onEventTap(event);
+        },
         child: Container(
           decoration: event.decoration ??
-              (BoxDecoration(color: event.backgroundColor)),
+                  BoxDecoration(color: event.backgroundColor),
           margin: event.margin,
           padding: event.padding,
           child: (Utils.eventText)(
@@ -41,8 +130,8 @@ class EventView extends StatelessWidget {
             math.max(
                 0.0,
                 timetableStyle.laneWidth -
-                    (event.padding.left ) -
-                    (event.padding.right )),
+                    (event.padding.left) -
+                    (event.padding.right)),
           ),
         ),
       ),
@@ -50,13 +139,15 @@ class EventView extends StatelessWidget {
   }
 
   double top() {
-    return calculateTopOffset(event.start.hour, event.start.minute,
+    return calculateTopOffset(event.startTime.hour, event.startTime.minute,
             timetableStyle.timeItemHeight) -
         timetableStyle.startHour * timetableStyle.timeItemHeight;
   }
 
   double height() {
-    return calculateTopOffset(0, event.end.difference(event.start).inMinutes,
+    return calculateTopOffset(
+            0,
+            event.endTime.difference(event.startTime).inMinutes,
             timetableStyle.timeItemHeight) +
         1;
   }

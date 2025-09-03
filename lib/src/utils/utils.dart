@@ -45,9 +45,9 @@ class Utils {
       ),
       TextSpan(
         text: ' ' +
-            Utils.hourFormatter(event.start.hour, event.start.minute) +
+            Utils.hourFormatter(event.startTime.hour, event.startTime.minute) +
             ' - ' +
-            Utils.hourFormatter(event.end.hour, event.end.minute) +
+            Utils.hourFormatter(event.endTime.hour, event.endTime.minute) +
             '\n\n',
       ),
     ];
