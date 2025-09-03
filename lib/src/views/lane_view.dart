@@ -71,7 +71,7 @@ class LaneView extends StatelessWidget {
   }
 
   double height() {
-    return (timetableStyle.endHour - timetableStyle.startHour) *
+    return (timetableStyle.endHour - timetableStyle.startHour) * 2 *
         timetableStyle.timeItemHeight;
   }
 

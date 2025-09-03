@@ -86,7 +86,7 @@ class _TimetableViewState extends State<TimetableView>
         maxWidth:
             widget.laneEventsList.length * widget.timetableStyle.laneWidth,
         maxHeight:
-            (widget.timetableStyle.endHour - widget.timetableStyle.startHour) *
+            (widget.timetableStyle.endHour - widget.timetableStyle.startHour) * 2 *
                 widget.timetableStyle.timeItemHeight,
         child: IntrinsicHeight(
           child: Row(
