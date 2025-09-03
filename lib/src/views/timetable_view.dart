@@ -11,7 +11,7 @@ class TimetableView extends StatefulWidget {
   final List<LaneEvents> laneEventsList;
   final TimetableStyle timetableStyle;
 
-  final Widget Function(TableEvent event)? customWidget;
+  final Widget Function(dynamic data)? customWidget;
 
   /// Called when an empty slot or cell is tapped must not be null
   // final void Function(int laneIndex, TableEventTime start, TableEventTime end)

@@ -18,7 +18,7 @@ class LaneView extends StatelessWidget {
   /// Called when an event is tapped
   final void Function(TableEvent event) onEventTap;
 
-  final Widget Function(TableEvent event)? customWidget;
+  final Widget Function(dynamic data)? customWidget;
 
   const LaneView({
     Key? key,

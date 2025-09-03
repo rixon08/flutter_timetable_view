@@ -15,7 +15,7 @@ class EventView extends StatelessWidget {
   /// Called when an event is tapped
   final void Function(TableEvent event) onEventTap;
 
-  final Widget Function(TableEvent event)? customWidget;
+  final Widget Function(dynamic data)? customWidget;
 
   const EventView({
     Key? key,
@@ -41,7 +41,7 @@ class EventView extends StatelessWidget {
           margin: event.margin,
           padding: event.padding,
           child: customWidget != null
-              ? customWidget!(event)
+              ? customWidget!(event.data)
               : Utils.eventText(
                   event,
                   context,
