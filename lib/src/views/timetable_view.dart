@@ -185,15 +185,15 @@ class _TimetableViewState extends State<TimetableView>
         children: widget.laneEventsList.map((laneEvents) {
           return Container(
             width: laneEvents.lane.width,
-            height: laneEvents.lane.height,
+            // height: laneEvents.lane.height,
             color: laneEvents.lane.backgroundColor,
-            child: Center(
-              child: Text(
-                laneEvents.lane.name,
-                style: laneEvents.lane.textStyle,
-                textAlign: TextAlign.center,
-              ),
-            ),
+            // child: Center(
+            //   child: Text(
+            //     laneEvents.lane.name,
+            //     style: laneEvents.lane.textStyle,
+            //     textAlign: TextAlign.center,
+            //   ),
+            // ),
           );
         }).toList(),
       ),
