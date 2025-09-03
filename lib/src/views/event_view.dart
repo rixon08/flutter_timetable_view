@@ -35,17 +35,14 @@ class EventView extends StatelessWidget {
       width: timetableStyle.laneWidth,
       child: GestureDetector(
         onTap: () => onEventTap(event),
-        child: customWidget != null
-            ? Container(
-                margin: event.margin,
-                child: customWidget!(event.data),
-              )
-            : Container(
-                decoration: event.decoration ??
-                    BoxDecoration(color: event.backgroundColor),
-                margin: event.margin,
-                padding: event.padding,
-                child: Utils.eventText(
+        child: Container(
+          decoration:
+              event.decoration ?? BoxDecoration(color: event.backgroundColor),
+          margin: event.margin,
+          padding: event.padding,
+          child: customWidget != null
+              ? customWidget!(event.data)
+              : Utils.eventText(
                   event,
                   context,
                   math.max(
@@ -59,7 +56,7 @@ class EventView extends StatelessWidget {
                         (event.padding.right),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }
